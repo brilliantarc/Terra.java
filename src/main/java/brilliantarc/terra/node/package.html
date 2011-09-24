@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<p>
+    Contains the model classes for information stored in the Terra server
+    regarding European Directories.  These form a layer on top of the default
+    Brilliant Arc concepts like portfolios and memes, so that you can interact
+    with the Terra services at a higher, more comfortable level.
+</p>
+
+<h3>Equality</h3>
+<p>
+    Memes have their hashCode() and equals() methods fully compliant, so
+    comparisons between Meme or Node instances will work as expected.  Most
+    memes equate on opco and slug, as well as type.
+</p>
+
+
+<h3>Strings</h3>
+<p>
+    The toString methods of all the memes in this package will return a detailed
+    string describing the features of each meme, including the name, slug,
+    external identifier, and so on.  This is useful for debugging, but it is
+    not very pretty to display to users.  If you display a value to users, call
+    the getName() or getSlug() methods on the meme; don't just rely on toString().
+</p>
+<p>
+    Use this:
+</p>
+<pre>
+      System.out.println("Received " + meme.getName());
+</pre>
+<p>
+    Not this:
+</p>
+<pre>
+    System.out.println("Received" + meme);
+</pre>
+<p>
+    That is, unless you want the "debuggable" output!
+</p>
+</body>
+</html>
