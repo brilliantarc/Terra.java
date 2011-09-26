@@ -29,7 +29,7 @@ public class Headings extends Base {
      * @throws SingularityException The given operating company does not exist
      */
     public List<Heading> all(String opco) {
-        return get("headings").as(new TypeReference<List<Heading>>() {});
+        return get("headings").send("opco", opco).as(new TypeReference<List<Heading>>() {});
     }
 
     /**
@@ -401,7 +401,7 @@ public class Headings extends Base {
      *
      * @throws SingularityException Either the category or heading does not exist or could not be unmapped
      */
-    public void UnmapHeading(Heading from, Category to) {
+    public void unmapHeading(Heading from, Category to) {
         services.categories().unmapHeading(from, to);
     }
 
@@ -417,6 +417,7 @@ public class Headings extends Base {
      * @throws SingularityException The heading does not exist
      */
     public List<Property> inheritance(Heading heading) {
-        return Property.fromJsonArray(get("heading/inheritance").send("opco", heading.getOpco(), "pid", heading.getPid()).root());
+        return get("heading/inheritance").send("opco", heading.getOpco(),
+                "pid", heading.getPid()).as(new TypeReference<List<Property>> () {});
     }
 }

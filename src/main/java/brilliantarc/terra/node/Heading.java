@@ -3,6 +3,8 @@ package brilliantarc.terra.node;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
+import java.util.List;
+
 /**
  * An operating company's business sales heading.  Businesses are sold into
  * a heading, and those headings are then mapped to taxonomic categories
@@ -23,6 +25,8 @@ public class Heading implements Meme {
     private String language;
     private String opco;
     private String version;
+
+    private List<Category> categories;
 
     /**
      * @return  the localized name of the heading; not necessarily unique
@@ -115,6 +119,21 @@ public class Heading implements Meme {
 
     public void setVersion(String version) {
         this.version = version;
+    }
+
+    /**
+     * Note that this information is never filled in by the Terra API, but you
+     * are welcome to use this slot to hold information in your own client
+     * applications.
+     *
+     * @return the categories mapped to this heading, presumably
+     */
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
     }
 
     @Override

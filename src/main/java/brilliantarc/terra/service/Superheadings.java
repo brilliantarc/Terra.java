@@ -156,7 +156,8 @@ public class Superheadings extends Base {
      * @throws SingularityException The superheading does not exist
      */
     public void delete(Superheading superheading) {
-        delete("superheading").send("opco", superheading.getOpco(), "slug", superheading.getSlug());
+        delete("superheading").send("opco", superheading.getOpco(), "slug", superheading.getSlug(),
+                "v", superheading.getVersion());
     }
 
     /**

@@ -419,6 +419,22 @@ public class Taxonomies extends Base {
     }
 
     /**
+     * Find the options associated with this taxonomy by the given property.
+     *
+     * We return the same value as the basic options() method, so that it's
+     * consistent, even though only a single Property is ever returned.
+     *
+     * @param taxonomy  The taxonomy of options to retrieve
+     * @param property  The specific property to restrict the list by
+     *
+     * @return A list with the Property object containing the matching options
+     */
+    public List<Property> options(Taxonomy taxonomy, Property property) {
+        return get("taxonomy/options").send("opco", taxonomy.getOpco(),
+                "slug", taxonomy.getSlug(), "property", property.getSlug()).as(new TypeReference<List<Property>>() {});
+    }
+
+    /**
      * Add an option to a taxonomy.  The taxonomy, option, and property
      * must all exist in the same operating company.
      *

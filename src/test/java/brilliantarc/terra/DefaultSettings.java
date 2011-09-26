@@ -15,4 +15,8 @@ public class DefaultSettings {
      */
     public static Client.Services terra = client.authenticate("admin", "admin!");
 
+    /**
+     * The slug for the test portfolio.
+     */
+    public static String TEST_PORTFOLIO = "TEST";
 }

@@ -143,6 +143,6 @@ public class Synonyms extends Base {
      * @see Superheadings#removeSynonym
      */
     public void delete(Synonym synonym) {
-        delete("synonym").send("opco", synonym.getOpco(), "slug", synonym.getSlug());
+        delete("synonym").send("opco", synonym.getOpco(), "slug", synonym.getSlug(), "v", synonym.getVersion());
     }
 }

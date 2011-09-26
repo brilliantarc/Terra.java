@@ -125,6 +125,21 @@ public class Taxonomy implements Meme {
     }
 
     /**
+     * Though the API is distinct, sometimes a category may act like a taxonomy
+     * and vice-versa.  In those situations, you may trap the exception for
+     * not found and try the taxonomy as a category.
+     *
+     * @return  a basic Category representing the Taxonomy (slug, opco), enough
+     *          for an API call
+     */
+    public Category asCategory() {
+        Category category = new Category();
+        category.setSlug(slug);
+        category.setOpco(opco);
+        return category;
+    }
+
+    /**
      * Used internally to convert a JSON object into a Taxonomy.
      *
      * @param node the JSON object received from the server

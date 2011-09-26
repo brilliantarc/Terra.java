@@ -112,7 +112,7 @@ public class Properties extends Base {
             params.put("category", relatedTo.getSlug());
         }
 
-        return post("option").send(params).as(Property.class);
+        return post("property").send(params).as(Property.class);
     }
 
     /**

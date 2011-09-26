@@ -2,6 +2,8 @@ package brilliantarc.terra;
 
 import brilliantarc.terra.server.Request;
 import brilliantarc.terra.service.*;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * Use this class to interact with the Terra server API.  Based on the Jersey
@@ -42,6 +44,8 @@ public class Client {
 
     private String baseUrl;
     private com.sun.jersey.api.client.Client jerseyClient;
+
+    private static Log log = LogFactory.getLog("brilliantarc.terra");
 
     /**
      * Hold on to a user object and issue requests with it.
@@ -98,6 +102,14 @@ public class Client {
          */
         public String uuid() {
             return request().to("uuid").send().toString();
+        }
+
+        /**
+         * Used in testing to reset the test operating company in the Terra
+         * server.
+         */
+        public void reset() {
+            log.debug(request().to("test/reset").send().toString());
         }
 
         /**

@@ -20,6 +20,21 @@ public class Categories extends Base {
     }
 
     /**
+     * Get all the categories defined for the operating company.  This may return
+     * categories that are not in use, i.e. not in any taxonomies, but are still
+     * defined in the system.
+     *
+     * @param opco the three or four letter code for the operating company
+     *
+     * @return the full, flat list of categories for the operating company
+     *
+     * @throws SingularityException if the operating company doesn't exist
+     */
+    public List<Category> all(String opco) {
+        return get("categories").send("opco", opco).as(new TypeReference<List<Category>>() {});
+    }
+
+    /**
      * Get the top-level categories for the given taxonomy.  Note that this
      * does not return all the categories for a taxonomy.
      *
@@ -454,7 +469,8 @@ public class Categories extends Base {
      * @throws SingularityException The category does not exist
      */
     public List<Property> properties(Category category) {
-        return get("category/properties").send("opco", category.getOpco(), "slug", category.getSlug()).as(new TypeReference<List<Property>>() {});
+        return get("category/properties").send("opco", category.getOpco(),
+                "slug", category.getSlug()).as(new TypeReference<List<Property>>() {});
     }
 
     /**
@@ -470,7 +486,8 @@ public class Categories extends Base {
      * @throws SingularityException Either the property or the category doesn't exist
      */
     public void addProperty(Category category, Property property) {
-        put("category/property").send("opco", category.getOpco(), "category", category.getSlug(), "property", property.getSlug());
+        put("category/property").send("opco", category.getOpco(), "category", category.getSlug(),
+                "property", property.getSlug());
     }
 
     /**
@@ -485,7 +502,8 @@ public class Categories extends Base {
      * @throws SingularityException Either the property or the node doesn't exist
      */
     public void removeProperty(Category category, Property property) {
-        delete("category/property").send("opco", category.getOpco(), "category", category.getSlug(), "property", property.getSlug());
+        delete("category/property").send("opco", category.getOpco(), "category", category.getSlug(),
+                "property", property.getSlug());
     }
 
     /**
@@ -502,7 +520,24 @@ public class Categories extends Base {
      * @return A list of Property objects with their Options list filled
      */
     public List<Property> options(Category category) {
-        return Property.fromJsonArray(get("category/properties").send("opco", category.getOpco(), "slug", category.getSlug()).root());
+        return get("category/options").send("opco", category.getOpco(),
+                "slug", category.getSlug()).as(new TypeReference<List<Property>>() {});
+    }
+
+    /**
+     * Find the options associated with this category by the given property.
+     *
+     * We return the same value as the basic options() method, so that it's
+     * consistent, even though only a single Property is ever returned.
+     *
+     * @param category  The category of options to retrieve
+     * @param property  The specific property to restrict the list by
+     *
+     * @return A list with the matching Options
+     */
+    public List<Option> options(Category category, Property property) {
+        return get("category/options").send("opco", category.getOpco(), "slug", category.getSlug(),
+                "property", property.getSlug()).as(new TypeReference<List<Option>>() {});
     }
 
     /**
@@ -548,7 +583,7 @@ public class Categories extends Base {
      */
     public List<Category> mappedTo(Category category) {
         return get("category/mappings").send("opco", category.getOpco(), "slug", category.getSlug(),
-                "dir", "to").as(new TypeReference<List<Category>>() {});
+                "dir", "from").as(new TypeReference<List<Category>>() {});
     }
 
     /**
@@ -563,7 +598,8 @@ public class Categories extends Base {
      * @throws SingularityException The object category does not exist
      */
     public List<Category> mappedFrom(Category category) {
-        return get("category/mappings").send("opco", category.getOpco(), "slug", category.getSlug()).as(new TypeReference<List<Category>>() {});
+        return get("category/mappings").send("opco", category.getOpco(), "slug", category.getSlug(),
+                "dir", "to").as(new TypeReference<List<Category>>() {});
     }
 
     /**
@@ -577,8 +613,24 @@ public class Categories extends Base {
      *
      * @throws SingularityException The object category does not exist
      */
-    public List<Heading> MappedHeadings(Category category) {
-        return get("category/headings").send("opco", category.getOpco(), "slug", category.getSlug(), "dir", "from").as(new TypeReference<List<Heading>>() {});
+    public List<Heading> mappedHeadings(Category category) {
+        return get("category/headings").send("opco", category.getOpco(), "slug", category.getSlug(),
+                "dir", "from").as(new TypeReference<List<Heading>>() {});
+    }
+
+    /**
+     * Look for the categories to which the given heading has been mapped.
+     * In otherwords, what heading-to-category mappings exists for which
+     * this heading is the subject of the relation?
+     *
+     * @param heading The subject heading of the relations
+     *
+     * @return A list of object categories
+     *
+     * @throws SingularityException The subject heading does not exist
+     */
+    public List<Category> mappedTo(Heading heading) {
+        return services.headings().mappedTo(heading);
     }
 
     /**
@@ -662,6 +714,7 @@ public class Categories extends Base {
      * @throws SingularityException The category does not exist
      */
     public List<Property> inheritance(Category category) {
-        return Property.fromJsonArray(get("category/inheritance").send("opco", category.getOpco(), "slug", category.getSlug()).root());
+        return get("category/inheritance").send("opco", category.getOpco(),
+                "slug", category.getSlug()).as(new TypeReference<List<Property>> () {});
     }
 }

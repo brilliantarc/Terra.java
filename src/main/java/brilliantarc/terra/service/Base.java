@@ -2,11 +2,15 @@ package brilliantarc.terra.service;
 
 import brilliantarc.terra.Client;
 import brilliantarc.terra.server.Request;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * Provides a few helper methods.
  */
 public class Base {
+
+    private static Log log = LogFactory.getLog("brilliantarc.terra");
 
     protected Client.Services services;
 

@@ -8,7 +8,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import org.junit.Test;
 
-import static brilliantarc.terra.DefaultSettings.terra;
+import static brilliantarc.terra.DefaultSettings.*;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -19,7 +19,7 @@ public class SearchTests {
         Category category = null;
 
         try {
-            category = terra.categories().create("DGS", "Searchable Boogley Category",
+            category = terra.categories().create(TEST_PORTFOLIO, "Searchable Boogley Category",
                     "searchable-category-test", "en");
         } catch (SingularityException e) {
             if (e.getStatus() == Status.DUPLICATE.code) {
@@ -29,7 +29,7 @@ public class SearchTests {
             }
         }
 
-        Search.Results results = terra.search().query("en", "boogley", "DGS");
+        Search.Results results = terra.search().query("en", "boogley", TEST_PORTFOLIO);
         assertNotNull(results);
         assertNotNull(results.getMemes());
         assertNotNull(results.getRefinements());

@@ -17,16 +17,16 @@ public class OperatingCompanyTests {
         assertTrue(opcos.size() > 0);
         assertTrue(Iterables.find(opcos, new Predicate<OperatingCompany>() {
             public boolean apply(OperatingCompany operatingCompany) {
-                return "PKT".equals(operatingCompany.getSlug());
+                return TEST_PORTFOLIO.equals(operatingCompany.getSlug());
             }
         }) != null);
     }
 
     @Test
     public void getOpcoBySlug() {
-        OperatingCompany opco = terra.operatingCompanies().operatingCompany("PKT");
+        OperatingCompany opco = terra.operatingCompanies().operatingCompany(TEST_PORTFOLIO);
         assertNotNull(opco);
-        assertEquals("PKT", opco.getSlug());
-        assertEquals("pl", opco.getLanguage());
+        assertEquals(TEST_PORTFOLIO, opco.getSlug());
+        assertEquals("en", opco.getLanguage());
     }
 }

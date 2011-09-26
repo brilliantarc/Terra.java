@@ -56,13 +56,31 @@
                 <version>2.8</version>
                 <configuration>
                     <doclet>wikidoclet.WikiDoclet</doclet>
-                    <docletPath>${project.basedir}/misc/wikidoclet.1.0.4.jar</docletPath>
+                    <docletPath>${project.basedir}/misc/wikidoclet.1.0.4.jar
+                    </docletPath>
                     <windowtitle>Brilliant Arc Terra Client API</windowtitle>
-                    <bottom>Copyright &#169; 2011 Brilliant Arc, All Rights Reserved</bottom>
+                    <bottom>Copyright &#169; 2011 Brilliant Arc, All Rights
+                        Reserved
+                    </bottom>
                     <charset>UTF-8</charset>
                     <encoding>UTF-8</encoding>
                     <useStandardDocletOptions>true</useStandardDocletOptions>
                 </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                            <excludeArtifactIds>junit,log4j</excludeArtifactIds>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

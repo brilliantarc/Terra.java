@@ -25,6 +25,21 @@ public class Options extends Base {
     }
 
     /**
+     * Get all the options defined for the operating company.  This may return
+     * options that are not in use, i.e. not associated with any taxonomies or
+     * categories, but are still defined in the system.
+     *
+     * @param opco the three or four letter code for the operating company
+     *
+     * @return the full, flat list of options for the operating company
+     *
+     * @throws SingularityException if the operating company doesn't exist
+     */
+    public List<Option> all(String opco) {
+        return get("options").send("opco", opco).as(new TypeReference<List<Option>>() {});
+    }
+
+    /**
      * Look up an option by its slug.  Useful for checking to see if an
      * option exists.
      *
@@ -174,7 +189,7 @@ public class Options extends Base {
      * @throws SingularityException The option does not exist
      */
     public void delete(Option option) {
-        delete("option").send("opco", option.getOpco(), "slug", option.getSlug());
+        delete("option").send("opco", option.getOpco(), "slug", option.getSlug(), "v", option.getVersion());
     }
 
     /**
